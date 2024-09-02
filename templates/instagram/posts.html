@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ profile.username }}'s Posts</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Posts for {{ profile.username }}</h1>
+    <p>Total posts displayed: {{ posts.count }}</p>
+
+    <ul>
+        {% for post in posts %}
+        <li>
+            <img src="{{ post.image.url }}" alt="Instagram Post Image" style="max-width:300px;"/>
+            <p>{{ post.caption }}</p>
+        </li>
+        {% empty %}
+        <li>No posts available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
