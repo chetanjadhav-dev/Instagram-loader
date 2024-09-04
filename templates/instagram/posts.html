@@ -14,7 +14,26 @@
     <ul>
         {% for post in posts %}
         <li>
-            <img src="{{ post.image.url }}" alt="Instagram Post Image" style="max-width:300px;"/>
+            {% if post.media_type == 'image' and post.image %}
+                <img src="{{ post.image.url }}" alt="Instagram Post Image" style="max-width:300px;"/>
+            {% elif post.media_type == 'video' and post.video %}
+                <video controls style="max-width:300px;">
+                    <source src="{{ post.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            {% elif post.media_type == 'carousel' %}
+                <p>Carousel Post:</p>
+                <ul>
+                    {% for image in post.carousel_images.all %}
+                    <li>
+                        <p>{{ forloop.parentloop.counter }}.{{ image.index }}</p>
+                        <img src="{{ image.image.url }}" alt="Carousel Image {{ image.index }}" style="max-width:300px;"/>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No media available.</p>
+            {% endif %}
             <p>{{ post.caption }}</p>
         </li>
         {% empty %}
