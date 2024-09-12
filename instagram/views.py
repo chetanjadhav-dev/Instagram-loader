@@ -21,7 +21,7 @@ def save_instagram_posts(request, username):
     L = instaloader.Instaloader()
 
     profile = instaloader.Profile.from_username(L.context, username)
-    post_limit = min(1000, profile.mediacount)
+    post_limit = min(600, profile.mediacount - 1)
     profile_obj, created = InstagramProfile.objects.get_or_create(
         username=profile.username,
         defaults={'post_count': post_limit}
